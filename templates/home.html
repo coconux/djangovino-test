@@ -1,0 +1,33 @@
+
+{% extends "basehome.html" %}
+{% load i18n staticfiles %}
+
+{% block title %}Home{% endblock %}
+{% block basesubhead %}Bienvenue !{% endblock %}
+
+{% block menuleft %}
+<h1>menuleft</h1>
+{% endblock %}
+
+
+{% block homecontent_left %}
+<ul>
+<li>item1</li>
+<li>item2</li>
+<li>item3</li>
+</ul>
+{% endblock %}
+
+{% block homecontent_right %}
+<h1>content</h1>
+{% endblock %}
+
+
+{% block ulbasefoot %}
+{{ block.super }} 
+<li> 1 </li>
+
+<li><img id="baselogo" src="{% static 'logo.jpg'%}"/></li>
+<li>2</li>
+
+{% endblock %}

@@ -1,0 +1,229 @@
+html, body {
+	height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+	min-height: 100%;
+    height: 100%;
+    height: auto;
+
+}
+
+
+/*
+###################################### baselogo ##########################################
+*/
+#baselogo{
+    width:60px;
+    height:20px;
+}
+
+/*
+###################################### basehead ##########################################
+*/
+.basehead {
+    min-height:3.5em;
+    color:white;
+    border-bottom:2px solid orange;
+    background-color: #267bb6;
+	background-image: -o-linear-gradient(bottom,#2576b4 0%,#348dce 94%);
+	background-image: -webkit-linear-gradient(bottom,#2576b4 0%,#368fcf 94%);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#2576b4),color-stop(0.94,#348dce));
+	background-image: linear-gradient(to top,#2576b4 0%,#348dce 94%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#348dce',endColorstr='#2576b4');
+	border-bottom: 1px solid #055999;
+	-webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
+	padding-right:0;
+	width:1280px;
+
+}
+.basehead ul{
+	margin:0;
+}
+
+.basehead li{                                                                                                                                                                                          list-style-type: none;
+	display: inline-block;
+    vertical-align: top;
+}
+
+/*
+###################################### basesubhead #######################################
+*/
+.basesubhead{
+    background: linear-gradient(to bottom, #2779b8 0%,#86bde8 100%);
+    background-image: linear-gradient(rgb(39, 121, 184) 0%, rgb(134, 189, 232) 100%);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial; 
+	height:4em;
+	position: relative;
+	z-index: 4;
+	margin:0;
+	padding:0;
+	width:1280px;
+	
+}
+.basesubhead h1{
+margin:0;
+padding:0;
+color:white;
+text-shadow: 0 2px 1px rgba(0,0,0,0.5);
+text-align:center;
+line-height:2em;
+}
+
+/*
+###################################### basecontent #######################################
+*/
+.basecontent_right{    
+                                                                                                                                                                
+    color:blue;
+    border:1px solid blue;
+    margin-left:auto;
+    margin-right:auto;
+    margin:auto;
+    width: 330px
+   
+}
+.basecontent_left{    
+                                                                                                                                                                
+    color:#ddf8c6;
+    border:3px solid blue;
+    margin-left:auto;
+    margin-right:auto;
+    margin:auto;
+  width :848px;
+
+}
+
+.homecontent_left{    
+                                                                                                                                                                
+    color:blue;
+    border:1px solid blue;
+    margin-left:auto;
+    margin-right:auto;
+    margin:auto;
+    width: 330px
+   
+}
+.homecontent_right{    
+                                                                                                                                                                
+    color:#ddf8c6;
+    border:3px solid blue;
+    margin-left:auto;
+    margin-right:auto;
+    margin:auto;
+  width :600px;
+
+}
+.arrow_box {
+	position: relative;
+	background: #88b7d5;
+	border: 4px solid #c2e1f5;
+}
+.arrow_box:after, .arrow_box:before {
+	left: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: #88b7d5;
+	border-width: 30px;
+	top: 50%;
+	margin-top: -30px;
+}
+.arrow_box:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: #c2e1f5;
+	border-width: 36px;
+	top: 50%;
+	margin-top: -36px;
+}
+
+
+.content{
+padding:5px; /* aération interne des blocs */
+margin-left:15px; /* espacement horizontal entre les blocs */
+display:inline-block;
+vertical-align:middle;
+text-align:left; /* on rétablit l'alignement du texte */ 
+}
+
+.basemiddle{
+border:3px solid blue;
+height:100%;
+width:1260px;
+margin-top:10px;
+}
+
+
+/*
+###################################### basefoot ##########################################
+*/
+.basefoot {
+	position: absolute;
+    bottom: 0;
+    padding: 10px;
+    background-image: url(../footer_pattern.png);
+    background-repeat:repeat;
+    width:1260px;
+}
+.basefoot ul{
+	margin:0;
+}
+
+ .basefoot li{                                                                                                                                                                                          list-style-type: none;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*
+###################################### blue_button ##########################################
+*/
+
+.right{
+border-radius: 0 50px 50px 0;
+border-left: none;
+display: block;
+}
+.left{
+border-radius: 50px 0 0 50px;}
+
+.right_button{
+right:0;
+position:absolute;
+}
+.blue_button a{
+
+background-image: linear-gradient(to top,#257dc2 0%,#57abe8 94%);
+background-image: -o-linear-gradient(bottom,#257dc2 0%,#57abe8 94%);
+background-image: -webkit-linear-gradient(bottom,#257dc2 0%,#57abe8 94%);
+background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#257dc2),color-stop(0.94,#57abe8));
+border: 1px solid #2b7db9;
+-webkit-box-shadow: inset 0 3px 0 -2px rgba(255,255,255,.3),0 2px 0 rgba(15,106,177,1),0.6px 3px 4px rgba(0,0,0,.4);
+box-shadow: inset 0 3px 0 -2px rgba(255,255,255,.3),0 2px 0 rgba(15,106,177,1),0.6px 3px 4px rgba(0,0,0,.4);
+text-shadow: 0 -1px 0 #666;
+color: #FFF;
+cursor: pointer;
+display: inline-block;
+font-size: 16px;
+font-weight: bold;
+padding: 7px 27px 7px 27px;
+}
+
+

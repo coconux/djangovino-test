@@ -1,0 +1,53 @@
+
+
+{% load i18n staticfiles %}
+<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="utf-8"> 
+			<title>{% block title %}Mon super site{% endblock %}</title> 
+	        <link rel="stylesheet" href="{% static 'registration/base.css' %}">
+
+		</head>
+		<body> 
+			<div class="basehead" >
+							<ul>
+								<li><img id="baselogo" src="{% static 'logo.jpg'%}"/></li>
+							</ul>
+			</div>
+			
+			<div class="basesubhead" >
+				<h1>{% block basesubhead %}Mon sous texte{% endblock %}</h1>
+			</div>
+			 <div class="basemiddle ">
+				<div class=" homecontent_left content" > 
+				{% block homecontent_left %} 
+				
+				{% endblock %}
+				</div> 
+						
+				<div class="homecontent_right content " > 
+				{% block homecontent_right %} 
+				
+				{% endblock %} 
+				</div> 
+				
+				
+			</div>
+			
+			<div class="basefoot" > 
+							<ul>
+							{% block ulbasefoot %}
+								<li><img id="baselogo" src="{% static 'logo.jpg'%}"/></li>
+							{% endblock %}
+							</ul>			</div>
+			</div>
+			
+		</body> 
+	</html>
+
+
+
+
+
+

@@ -1,0 +1,262 @@
+{% load staticfiles %}
+
+
+<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.js"%}"></script>
+<link href="{% static "css/jquery.pnotify.default.css"%}" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" media="all" href="{% static "bootstrap/css/bootstrap.css"%}" />
+
+
+<script type="text/javascript" src="{% static "js/jquery-2.0.2.min.js"%}"></script>
+<script type="text/javascript" src="{% static "js/cave/dnd2.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.sortable.min.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.sortable.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.easyui.min.js"%}"></script>
+
+<script type="text/javascript" src="{% static "js/jquery.pnotify.min.js"%}"></script>
+
+
+<link rel="stylesheet" type="text/css" media="all" href="{% static "css/cave/dnd.css"%}" />
+
+
+
+
+
+	<script>
+
+
+
+        function notifyReplaceByCave(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Remplacement d\'une bouteille par une bouteille en cave',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyReplaceByStock(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Remplacement d\'une bouteille par une bouteille en stock',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyPlaceByStock(cave,nom,id,x,y){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Placement d\'une bouteille '+ nom+ ' (id:'+id+') dans cave '+cave+' en'+x+'-'+y,
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyPlaceByCave(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Deplacement d\'une bouteille en cave',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+		$(function(){
+
+            $('.right td.title').droppable({
+                onDragEnter:function(){
+					$(this).addClass('over');
+				},
+				onDragLeave:function(){
+					$(this).removeClass('over');
+				},
+				onDrop:function(e,source){
+
+                    alert(e);
+                    alert(source);
+                }
+
+            });
+
+			$('.left .item').draggable({
+				revert:true,
+				proxy:'clone'
+			});
+			$('.right td.drop').droppable({
+				onDragEnter:function(){
+					$(this).addClass('over');
+				},
+				onDragLeave:function(){
+					$(this).removeClass('over');
+				},
+				onDrop:function(e,source){
+					$(this).removeClass('over');
+
+					if ($(source).hasClass('assigned')){
+                        if ($(this).children("div").data() != null)
+                         {
+                                notifyReplaceByCave();
+                         }
+                        else{
+                             notifyPlaceByCave();
+
+                        }
+						$(this).empty().append(source);
+					} else {
+						var c = $(source).clone().addClass('assigned');
+                        if ($(this).children("div").data() != null)
+                            {
+                                notifyReplaceByStock();
+
+                         }
+                        else{
+                            x=($(this).attr("x"));
+                            y=($(this).attr("y"));
+                            id=c.attr("id");
+                            nom = c.html();
+                            id_cave = $(this).parents("table").attr("id_cave")
+
+                            ajaxPlaceByStock(id_cave,nom,id,x,y);
+                            notifyPlaceByStock(id_cave,nom,id,x,y);
+
+                        }
+						$(this).empty().append(c);
+						c.draggable({
+							revert:true
+						});
+					}
+				}
+			});
+		});
+
+
+
+
+	</script>
+
+
+<div style="width:750px;">
+
+
+
+</div>
+
+
+{% block content %}
+    <div class="left">
+		<table>
+        <!-- Notre stock de bouteille -->
+           {% for b in bouteilles %}
+               <tr>
+
+
+               {%  if  b.celluleB.cave.id == cave.id  %}
+                dans la cave en {{ b.celluleB.x }} {{ b.celluleB.y }}
+               <td><div id="{{ b.id }}" id_bouteille="bouteille_{{ b.id }}" class="itemCave bouteille_{{ b.id }}">{{ b }} En cave </div></td>
+                {% else %}
+               <td><div id="{{ b.id }}" id_bouteille="bouteille_{{ b.id }}" class="item bouteille_{{ b.id }}">{{ b }} En stock</div></td>
+               {%  endif %}
+
+               </tr>
+           {% endfor %}
+		</table>
+	</div>
+
+
+
+
+  	<div class="right">
+
+        <table class="cave" id="cave_{{ cave.id }}" id_cave="{{ cave.id }}">
+            <tr>
+                <td class="blank">#</td>
+                {% for x in colonnes %}
+                    <td class="title">{{ x }}</td>
+                {% endfor %}
+            </tr>
+            {% for y in lignes %}
+                <tr>
+                    <td  class="title">{{ y }}</td>
+                    {% for x in colonnes %}
+                        <td x="{{ x }}" y="{{ y }}" class="drop"></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+        </table>
+</div>
+</table>
+<!-- On parcours les cellules qui sont prises -->
+                     {% for cel in cellules %}
+                         <script>
+                        // ON cree la div bouteille
+                         bouteille='<div class="item assigned bouteille_{{ b.id }}" id={{ cel.maBouteille.id }} id_bouteille = "bouteille_{{ cel.maBouteille.id }}"" style="position: static; left: 1px; top: 23px;">{{ cel.maBouteille.refB.nomB }}</div>'
+                        //On met la div bouteille dans sa cellule
+                         $("#cave_2 td[x={{ cel.x }}][y={{ cel.y }}]").append(bouteille);
+                        </script>
+
+                    {% endfor %}
+
+{% endblock %}
+
+
+
+<script>
+    //On rend les div bouteilles en cave draggable
+    			$('.item').draggable({
+				revert:true,
+				proxy:'clone'
+			});
+
+
+
+function ajaxPlaceByStock(id_cave,nom,id,x,y){
+
+    tab_bouteille = Array()
+    tab_bouteille[0]={"id_cave": id_cave, "nom": nom, "id": id, "x":x, "y":y};
+
+    $.ajax({
+        type: "POST",
+        url: "/djangovino/place_bouteille",
+        dataType: "json",
+        traditional: true,
+        data: {'list_bouteille': JSON.stringify(tab_bouteille)},
+        success: function(data) {
+            console.log(data["HTTPRESPONSE"]);
+            alert(data)
+        }
+});
+
+}
+
+
+function calculate(){
+$.ajax({
+        type: "POST",
+        url: "/djangovino/add_bouteille",
+        dataType: "json",
+        traditional: true,
+        data: {'list_bouteille': JSON.stringify(tab_bouteille)},
+        success: function(data) {
+            console.log(data["HTTPRESPONSE"]);
+            alert(data)
+        }
+});
+
+    }
+
+    tab_bouteille = Array()
+    tab_bouteille[0]={"nom": "vodka",
+                  "quantite": 25};
+    tab_bouteille[1]={"nom": "chartreuse",
+		  "quantite": 25};
+
+
+
+
+</script>
+
+
+
+<input type="button" value="Multiply!" onclick="calculate();">
+

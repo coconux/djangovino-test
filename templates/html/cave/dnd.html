@@ -1,0 +1,226 @@
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.js"%}"></script>
+<link href="{% static "css/jquery.pnotify.default.css"%}" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" media="all" href="{% static "bootstrap/css/bootstrap.css"%}" />
+
+
+<script type="text/javascript" src="{% static "js/jquery-2.0.2.min.js"%}"></script>
+<script type="text/javascript" src="{% static "js/cave/dnd2.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.sortable.min.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.sortable.js"%}"></script>
+<script type="text/javascript" src="{% static "js/jquery.easyui.min.js"%}"></script>
+
+<script type="text/javascript" src="{% static "js/jquery.pnotify.min.js"%}"></script>
+
+
+<link rel="stylesheet" type="text/css" media="all" href="{% static "css/cave/dnd.css"%}" />
+
+
+	<script>
+
+        function notifyReplaceByCave(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Remplacement d\'une bouteille par une bouteille en cave',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyReplaceByStock(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Remplacement d\'une bouteille par une bouteille en stock',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyPlaceByStock(cave,nom,id,x,y){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Placement d\'une bouteille '+ nom+ ' (id:'+id+') dans cave '+cave+' en'+x+'-'+y,
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+        function notifyPlaceByCave(){
+            $.pnotify({
+                title: 'Bootstrap Info',
+                text: 'Deplacement d\'une bouteille en cave',
+                type: 'info',
+                styling: 'bootstrap'
+            });
+        }
+
+		$(function(){
+
+
+			$('.left .item').draggable({
+				revert:true,
+				proxy:'clone'
+			});
+			$('.right td.drop').droppable({
+				onDragEnter:function(){
+					$(this).addClass('over');
+				},
+				onDragLeave:function(){
+					$(this).removeClass('over');
+				},
+				onDrop:function(e,source){
+					$(this).removeClass('over');
+
+					if ($(source).hasClass('assigned')){
+                        if ($(this).children("div").data() != null)
+                         {
+                                notifyReplaceByCave();
+                         }
+                        else{
+                             notifyPlaceByCave();
+
+                        }
+						$(this).empty().append(source);
+					} else {
+						var c = $(source).clone().addClass('assigned');
+                        if ($(this).children("div").data() != null)
+                            {
+                                notifyReplaceByStock();
+
+                         }
+                        else{
+                            x=($(this).attr("x"));
+                            y=($(this).attr("y"));
+                            id=c.attr("id");
+                            nom = c.html();
+                            cave = $(this).parents("table").attr("id")
+
+                            notifyPlaceByStock(cave,nom,id,x,y);
+
+                        }
+						$(this).empty().append(c);
+						c.draggable({
+							revert:true
+						});
+					}
+				}
+			});
+		});
+
+
+
+
+	</script>
+
+
+<div style="width:750px;">
+	<div class="left">
+		<table>
+			<tr>
+				<td><div id="eng" class="item">English</div></td>
+			</tr>
+			<tr>
+				<td><div id="sci" class="item2">Science</div></td>
+			</tr>
+			<tr>
+				<td><div id="mus" class="item">Music</div></td>
+			</tr>
+			<tr>
+				<td><div id="his" class="item">History</div></td>
+			</tr>
+			<tr>
+				<td><div id="com" class="item">Computer</div></td>
+			</tr>
+			<tr>
+				<td><div id="mat" class="item">Mathematics</div></td>
+			</tr>
+			<tr>
+				<td><div  id="art" class="item">Arts</div></td>
+			</tr>
+			<tr>
+				<td><div id="eth" class="item">Ethics</div></td>
+			</tr>
+		</table>
+	</div>
+	<div class="right">
+		<table id="maCave">
+			<tr>
+				<td class="blank"></td>
+				<td class="title">A</td>
+				<td  class="title">B</td>
+				<td  class="title">C</td>
+				<td  class="title">D</td>
+				<td  class="title">E</td>
+			</tr>
+			<tr>
+				<td class="time">1</td>
+				<td x="0" y="0" class="drop">0</td>
+				<td id="macell" x="0" y="1" class="drop">1</td>
+				<td x="0" y="2" class="drop">2</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">2</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">3</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">4</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">5</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">separateur</td>
+				<td class="lunch" colspan="5">-----</td>
+			</tr>
+			<tr>
+				<td class="time">6</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">7</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+			<tr>
+				<td class="time">8</td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+				<td class="drop"></td>
+			</tr>
+		</table>
+	</div>
+</div>
